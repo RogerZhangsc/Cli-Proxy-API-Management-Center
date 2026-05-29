@@ -16,6 +16,7 @@ export interface SmartRoutingProbeResult {
 
 export interface SmartRoutingProbeResponse {
   enabled: boolean;
+  routingEnabled?: boolean;
   counts?: SmartRoutingProbeCounts;
   results?: SmartRoutingProbeResult[];
 }

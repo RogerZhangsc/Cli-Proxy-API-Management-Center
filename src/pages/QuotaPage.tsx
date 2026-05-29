@@ -90,6 +90,7 @@ export function QuotaPage() {
         files={files}
         loading={loading}
         disabled={disableControls}
+        showSmartRoutingProbe
       />
       <QuotaSection
         config={XAI_CONFIG}

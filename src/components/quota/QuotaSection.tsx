@@ -180,10 +180,6 @@ export function QuotaSection<TState extends QuotaStatusState, TData>({
     setSmartProbeLoading(true);
     try {
       const response = await smartRoutingApi.probe();
-      if (!response.enabled) {
-        showNotification(t('quota_management.smart_probe_disabled'), 'error');
-        return;
-      }
       const counts = response.counts ?? {};
       showNotification(
         t('quota_management.smart_probe_success', {
