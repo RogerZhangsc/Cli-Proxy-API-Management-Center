@@ -9,6 +9,7 @@ import { Button } from '@/components/ui/Button';
 import { EmptyState } from '@/components/ui/EmptyState';
 import { triggerHeaderRefresh } from '@/hooks/useHeaderRefresh';
 import { useNotificationStore, useQuotaStore, useThemeStore } from '@/stores';
+import { smartRoutingApi } from '@/services/api';
 import type { AuthFileItem, ResolvedTheme } from '@/types';
 import { getStatusFromError } from '@/utils/quota';
 import { QuotaCard } from './QuotaCard';
@@ -96,13 +97,15 @@ interface QuotaSectionProps<TState extends QuotaStatusState, TData> {
   files: AuthFileItem[];
   loading: boolean;
   disabled: boolean;
+  showSmartRoutingProbe?: boolean;
 }
 
 export function QuotaSection<TState extends QuotaStatusState, TData>({
   config,
   files,
   loading,
-  disabled
+  disabled,
+  showSmartRoutingProbe = false
 }: QuotaSectionProps<TState, TData>) {
   const { t } = useTranslation();
   const resolvedTheme: ResolvedTheme = useThemeStore((state) => state.resolvedTheme);
@@ -115,6 +118,7 @@ export function QuotaSection<TState extends QuotaStatusState, TData>({
   const [columns, gridRef] = useGridColumns(380); // Min card width 380px matches SCSS
   const [viewMode, setViewMode] = useState<ViewMode>('paged');
   const [showTooManyWarning, setShowTooManyWarning] = useState(false);
+  const [smartProbeLoading, setSmartProbeLoading] = useState(false);
 
   const filteredFiles = useMemo(() => files.filter((file) => config.filterFn(file)), [
     files,
@@ -170,6 +174,32 @@ export function QuotaSection<TState extends QuotaStatusState, TData>({
     pendingQuotaRefreshRef.current = true;
     void triggerHeaderRefresh();
   }, []);
+
+  const handleSmartRoutingProbe = useCallback(async () => {
+    if (disabled || smartProbeLoading) return;
+    setSmartProbeLoading(true);
+    try {
+      const response = await smartRoutingApi.probe();
+      if (!response.enabled) {
+        showNotification(t('quota_management.smart_probe_disabled'), 'error');
+        return;
+      }
+      const counts = response.counts ?? {};
+      showNotification(
+        t('quota_management.smart_probe_success', {
+          success: counts.success ?? 0,
+          skipped: counts.skipped ?? 0,
+          error: counts.error ?? 0
+        }),
+        (counts.error ?? 0) > 0 ? 'warning' : 'success'
+      );
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : t('common.unknown_error');
+      showNotification(t('quota_management.smart_probe_failed', { message }), 'error');
+    } finally {
+      setSmartProbeLoading(false);
+    }
+  }, [disabled, showNotification, smartProbeLoading, t]);
 
   useEffect(() => {
     const wasLoading = prevFilesLoadingRef.current;
@@ -296,6 +326,21 @@ export function QuotaSection<TState extends QuotaStatusState, TData>({
             {!isRefreshing && <IconRefreshCw size={16} />}
             {t('quota_management.refresh_all_credentials')}
           </Button>
+          {showSmartRoutingProbe && (
+            <Button
+              variant="secondary"
+              size="sm"
+              className={styles.smartProbeButton}
+              onClick={() => void handleSmartRoutingProbe()}
+              disabled={disabled || smartProbeLoading}
+              loading={smartProbeLoading}
+              title={t('quota_management.smart_probe_all')}
+              aria-label={t('quota_management.smart_probe_all')}
+            >
+              {!smartProbeLoading && <IconRefreshCw size={16} />}
+              {t('quota_management.smart_probe_all')}
+            </Button>
+          )}
         </div>
       }
     >

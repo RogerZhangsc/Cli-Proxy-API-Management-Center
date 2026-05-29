@@ -189,10 +189,11 @@
     "ws_auth_enable": "Require auth for /ws/*",
     "routing_title": "Routing Strategy",
     "routing_strategy_label": "Routing strategy:",
-    "routing_strategy_hint": "round-robin cycles through keys; fill-first prioritizes the first available key.",
+    "routing_strategy_hint": "round-robin cycles through keys; fill-first prioritizes the first available key; smart-routing prioritizes quota and keeps client affinity.",
     "routing_strategy_update": "Update",
     "routing_strategy_round_robin": "round-robin (cycle)",
-    "routing_strategy_fill_first": "fill-first (prioritize)"
+    "routing_strategy_fill_first": "fill-first (prioritize)",
+    "routing_strategy_smart_routing": "smart-routing (quota aware)"
   },
   "api_keys": {
     "title": "API Keys Management",
@@ -926,6 +927,7 @@
           "routing_strategy_hint": "Select credential selection strategy",
           "strategy_round_robin": "Round Robin",
           "strategy_fill_first": "Fill First",
+          "strategy_smart_routing": "Smart Routing",
           "session_affinity_ttl": "Session Affinity TTL",
           "force_model_prefix": "Force Model Prefix",
           "force_model_prefix_desc": "Unprefixed model requests only use credentials without prefix",
@@ -1061,6 +1063,10 @@
     "refresh_files": "Refresh auth files",
     "refresh_files_and_quota": "Refresh files & quota",
     "refresh_all_credentials": "Refresh all credentials",
+    "smart_probe_all": "Probe 5h limits",
+    "smart_probe_success": "Probe finished: {{success}} sent, {{skipped}} skipped, {{error}} failed",
+    "smart_probe_failed": "Probe failed: {{message}}",
+    "smart_probe_disabled": "Smart routing is not active",
     "card_idle_hint": "Use the top \"Refresh all credentials\" button to fetch the latest quota data."
   },
   "system_info": {

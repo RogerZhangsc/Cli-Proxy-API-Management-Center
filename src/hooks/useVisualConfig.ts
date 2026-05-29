@@ -10,6 +10,7 @@ import type {
   VisualConfigValues,
   VisualConfigValidationErrors,
   PayloadParamValidationErrorCode,
+  RoutingStrategy,
 } from '@/types/visualConfig';
 import { DEFAULT_VISUAL_VALUES } from '@/types/visualConfig';
 
@@ -170,6 +171,10 @@ function getPortError(value: string): 'port_range' | undefined {
   if (!/^\d+$/.test(trimmed)) return 'port_range';
   const parsed = Number(trimmed);
   return parsed >= 1 && parsed <= 65535 ? undefined : 'port_range';
+}
+
+function parseRoutingStrategy(value: unknown): RoutingStrategy {
+  return value === 'fill-first' || value === 'smart-routing' ? value : 'round-robin';
 }
 
 export function getVisualConfigValidationErrors(
@@ -1083,7 +1088,7 @@ export function useVisualConfig() {
         quotaSwitchPreviewModel: Boolean(quotaExceeded?.['switch-preview-model'] ?? true),
         quotaAntigravityCredits: Boolean(quotaExceeded?.['antigravity-credits'] ?? false),
 
-        routingStrategy: routing?.strategy === 'fill-first' ? 'fill-first' : 'round-robin',
+        routingStrategy: parseRoutingStrategy(routing?.strategy),
         routingSessionAffinity: Boolean(
           routing?.['session-affinity'] ?? routing?.sessionAffinity ?? routing?.['sessionAffinity']
         ),

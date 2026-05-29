@@ -1,5 +1,6 @@
 export type PayloadParamValueType = 'string' | 'number' | 'boolean' | 'json';
 export type DisableImageGenerationMode = 'false' | 'true' | 'chat';
+export type RoutingStrategy = 'round-robin' | 'fill-first' | 'smart-routing';
 export type PayloadParamValidationErrorCode =
   | 'payload_invalid_number'
   | 'payload_invalid_boolean'
@@ -99,7 +100,7 @@ export type VisualConfigValues = {
   quotaSwitchProject: boolean;
   quotaSwitchPreviewModel: boolean;
   quotaAntigravityCredits: boolean;
-  routingStrategy: 'round-robin' | 'fill-first';
+  routingStrategy: RoutingStrategy;
   routingSessionAffinity: boolean;
   routingSessionAffinityTTL: string;
   wsAuth: boolean;

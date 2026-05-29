@@ -189,10 +189,11 @@
     "ws_auth_enable": "Требовать аутентификацию для /ws/*",
     "routing_title": "Стратегия маршрутизации",
     "routing_strategy_label": "Стратегия маршрутизации:",
-    "routing_strategy_hint": "round-robin циклически перебирает ключи; fill-first отдаёт приоритет первому доступному ключу.",
+    "routing_strategy_hint": "round-robin циклически перебирает ключи; fill-first отдаёт приоритет первому доступному ключу; smart-routing учитывает квоты и привязку клиента.",
     "routing_strategy_update": "Обновить",
     "routing_strategy_round_robin": "round-robin (цикл)",
-    "routing_strategy_fill_first": "fill-first (приоритет)"
+    "routing_strategy_fill_first": "fill-first (приоритет)",
+    "routing_strategy_smart_routing": "smart-routing (по квотам)"
   },
   "api_keys": {
     "title": "Управление API-ключами",
@@ -923,6 +924,7 @@
           "routing_strategy_hint": "Выберите стратегию подбора учётных данных",
           "strategy_round_robin": "По кругу",
           "strategy_fill_first": "Сначала заполнить",
+          "strategy_smart_routing": "Умная маршрутизация",
           "session_affinity_ttl": "TTL привязки сессии",
           "force_model_prefix": "Принудительный префикс модели",
           "force_model_prefix_desc": "Запросы к моделям без префикса используют только учётные данные без префикса",
@@ -1058,6 +1060,10 @@
     "refresh_files": "Обновить файлы авторизации",
     "refresh_files_and_quota": "Обновить файлы и квоты",
     "refresh_all_credentials": "Обновить все учётные данные",
+    "smart_probe_all": "Проверить лимиты 5 ч",
+    "smart_probe_success": "Проверка завершена: отправлено {{success}}, пропущено {{skipped}}, ошибок {{error}}",
+    "smart_probe_failed": "Не удалось выполнить проверку: {{message}}",
+    "smart_probe_disabled": "Smart Routing не активен",
     "card_idle_hint": "Используйте кнопку «Обновить все учётные данные» сверху, чтобы загрузить актуальные данные по квотам."
   },
   "system_info": {

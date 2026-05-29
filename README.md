@@ -144,6 +144,10 @@ bun run format     # Prettier
 bun run type-check # tsc --noEmit
 ```
 
+## Feature docs
+
+- [Smart Routing](docs/smart-routing.md): config contract, routing algorithm, quota reset monitoring, probe behavior, and rollout checklist.
+
 ## Contributing
 
 Issues and PRs are welcome. Please include:

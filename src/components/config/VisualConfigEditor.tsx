@@ -894,6 +894,12 @@ export function VisualConfigEditor({
                               'config_management.visual.sections.network.strategy_fill_first'
                             ),
                           },
+                          {
+                            value: 'smart-routing',
+                            label: t(
+                              'config_management.visual.sections.network.strategy_smart_routing'
+                            ),
+                          },
                         ]}
                         id={`${routingStrategyLabelId}-select`}
                         disabled={disabled}

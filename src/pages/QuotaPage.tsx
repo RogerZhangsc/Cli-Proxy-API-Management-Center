@@ -77,6 +77,7 @@ export function QuotaPage() {
         files={files}
         loading={loading}
         disabled={disableControls}
+        showSmartRoutingProbe
       />
       <QuotaSection
         config={ANTIGRAVITY_CONFIG}
